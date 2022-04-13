@@ -3,10 +3,14 @@
 {
   Blob
   FileList
+  FileReader
   HTMLCollection
   Image
   Node
   document
+  navigator
+  opener
+  parent
   self
 } = window
 
@@ -20,12 +24,16 @@ PACKAGE =
 Object.assign global, {
   Blob
   FileList
+  FileReader
   HTMLCollection
   Image
   Node
   PACKAGE
   assert
   document
+  navigator
+  opener
+  parent
   self
   window
 }

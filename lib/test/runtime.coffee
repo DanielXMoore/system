@@ -1,6 +1,7 @@
-mocha.globals(['OBSERVABLE_ROOT_HACK', "application"])
+# TODO
+# mocha.globals(['OBSERVABLE_ROOT_HACK', "application"])
 
-systemG = require "/lib/exports"
+systemG = require "../exports"
 SystemClient = require "../runtime"
 
 nullLogger =
@@ -13,7 +14,7 @@ describe "Runtime", ->
 
     assert system
     assert application
-    
+
     # Actual API
     app = system.app.Base()
     assert.equal app.currentPath(), ""
@@ -62,7 +63,7 @@ describe "Runtime", ->
 
     return
 
-  # This was madness to test, the earlier clients had their own postmasters 
+  # This was madness to test, the earlier clients had their own postmasters
   # listening!! Make sure to dispose shared resources!
   it "should launch with config", ->
     systemG.launch {

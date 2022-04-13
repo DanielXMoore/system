@@ -1,6 +1,6 @@
 # NOTE: It is important to call dispose at the end of each test because
 # Postmaster attaches a global event listener and needs to clean up.
-Postmaster = require "/lib/postmaster"
+Postmaster = require "../postmaster"
 
 randId = ->
   Math.random().toString(36).substr(2)
@@ -185,7 +185,7 @@ describe "Postmaster", ->
   it "should return a rejected promise when unable to send to the target", (done) ->
     postmaster = Postmaster
       remoteTarget: -> null
-    
+
     postmaster.send "yo"
     .then ->
       done throw new Error "Expected an error"
