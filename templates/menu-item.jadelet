@@ -1,0 +1,6 @@
+menu-item(@class @click @mousemove @disabled)
+  label
+    @title
+    span.hotkey @hotkey
+    span.decoration @decoration
+  @content

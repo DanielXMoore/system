@@ -1,0 +1,6 @@
+form(submit=@confirm tabindex=-1)
+  h1 @title
+  p @message
+  @inputElement
+  button OK
+  @cancelButton

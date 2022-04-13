@@ -1,0 +1,23 @@
+window(@class)
+  resize.n.h
+  resize.e.v
+  resize.s.h
+  resize.w.v
+  resize.n.e.h
+  resize.n.e.v
+  resize.n.w.h
+  resize.n.w.v
+  resize.s.e.h
+  resize.s.e.v
+  resize.s.w.h
+  resize.s.w.v
+  header
+    icon(style=@iconStyle) @iconEmoji
+    title-bar(dblclick=@maximize) @title
+    control.minimize(click=@minimize)
+    control.maximize(click=@maximize)
+    control.restore(click=@restore)
+    control.close(click=@close)
+  @menuBar
+  viewport
+    @content

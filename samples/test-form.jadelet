@@ -1,0 +1,13 @@
+form
+  h1 Cool Form Bro
+  p
+    a(href="https://yolo.biz") Yolo
+    a.button Link Button
+  input(name="yolo")
+  input(name="x" value="Lorem")
+  input(name="y" value="florem")
+  input(name="z" type="number" value=5)
+  input(name="file" type="file")
+  textarea(name="text")
+  button Submit
+  button(click=@cancel) Cancel

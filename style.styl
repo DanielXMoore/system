@@ -1,0 +1,618 @@
+@font-face
+  font-family: 'Fira Sans'
+  font-style: normal
+  font-weight: 400
+  src: local('Fira Sans Regular'), local('FiraSans-Regular'), url("https://danielx.net/fonts/FiraSans-v10-Regular.woff2") format('woff2')
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+
+@font-face
+  font-family: 'Fira Sans'
+  font-style: italic
+  font-weight: 400
+  src: local('Fira Sans Italic'), local('FiraSans-Italic'), url("https://danielx.net/fonts/FiraSans-v10-Italic.woff2") format('woff2')
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+
+@font-face
+  font-family: 'Fira Sans'
+  font-style: normal
+  font-weight: 700
+  src: local('Fira Sans Bold'), local('FiraSans-Bold'), url("https://danielx.net/fonts/FiraSans-v10-Bold.woff2") format('woff2')
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+
+/*
+Inspiration
+https://lospec.com/palette-list/hyperchill-10
+#ffb845
+#fb7974
+#f97698
+#ce5f9f
+#a348a6
+#8549ad
+#674ab3
+#556dc8
+#6783db
+#7998ee
+*/
+
+// Theme variables
+:root
+  // Neutral border and shadow styles
+  --neutral-light: rgba(255, 255, 255, 0.5)
+  --neutral-faintest: #efefef
+  --neutral-faint: rgba(0, 0, 0, 0.25)
+  --neutral-dark: rgba(0, 0, 0, 0.5)
+  --neutral-darker: rgba(0, 0, 0, 0.875)
+
+  // shadow heights
+  --shadow-low: 1px 2px 0
+  --shadow-medium: 4px 4px 0
+
+  // borders
+  --border-radius: 0
+
+  // colors
+  --background-color: #ffffff
+  --background-neutral: gainsboro
+  --dark-subdued-color: #000080
+  --error-color: #800
+  --highlight-color: #ffb845
+  --hover-color: #d2d9ef
+  --primary-color: #8549ad
+  --text-color: rgba(0, 0, 0, 0.9375)
+  --text-primary-color: #ffffff
+
+*
+  box-sizing: border-box
+
+// Helpers
+no-select()
+  user-select: none
+  -webkit-user-select: none // safari
+  -ms-user-select: none // ie
+
+html
+  color: var(--text-color)
+  font-family: 'Fira Sans', Sans-Serif
+  font-size: 16px
+  line-height: 1.5
+
+body, html
+  height: 100%
+
+body
+  // TODO: This is pretty aggressive and specific to appending a single 'app'
+  // element to the body.
+  display: flex
+  flex-direction: column
+
+  margin: 0
+
+// resets
+
+h1, h2, h3, h4, h5, h6
+  margin: 0
+
+iframe
+  border: none
+
+p
+  margin: 0 0 1rem
+
+ul
+  list-style: none
+  margin: 0
+  padding: 0
+
+input, textarea, keygen, select, button
+  color: inherit
+  font: inherit
+  line-height: inherit
+
+// Base styles
+
+:focus-visible
+  outline: 2px solid var(--text-color)
+
+::-webkit-scrollbar
+  border: 1px solid var(--neutral-darker)
+  background-color: var(--background-neutral)
+  border-radius: var(--border-radius)
+
+::-webkit-scrollbar-thumb
+  background-color: var(--background-color)
+  border: 1px solid var(--neutral-darker)
+  border-radius: var(--border-radius)
+
+  &:hover
+    background-color: var(--neutral-faintest)
+
+button, a.button, input[type="file"]::file-selector-button
+  background-color: var(--background-color)
+  border: 1px solid var(--neutral-darker)
+  border-radius: var(--border-radius)
+  box-shadow: var(--shadow-low) var(--neutral-dark)
+  cursor: pointer
+  display: inline-block
+  padding: 0.125em 0.375em
+
+button, a.button
+  &:hover
+    background-color: var(--neutral-faintest)
+
+  &:active, &.active
+    background-color: var(--neutral-faintest)
+    box-shadow: var(--shadow-low) var(--neutral-dark) inset
+
+// This needs the :: selector after :hover and :active
+input[type="file"]
+  &:hover
+    &::file-selector-button
+      background-color: var(--neutral-faintest)
+  &:active, &.active
+    &::file-selector-button
+      background-color: var(--neutral-faintest)
+      box-shadow: var(--shadow-low) var(--neutral-dark) inset
+
+input, textarea
+  // background-color: var(--neutral-faintest)
+  border: 1px solid var(--neutral-darker)
+  border-radius: var(--border-radius)
+  box-shadow: var(--shadow-low) var(--neutral-dark) inset
+
+  padding: 0.125em 0.25em
+
+  &::placeholder
+    font-style: italic
+
+input[type="file"]
+  border-width: 0
+  box-shadow: none
+  padding: 3px 0
+
+label
+  > input, > textarea, > select
+    width: 100%
+
+// Loader
+loader
+  display: block
+  padding: 1em
+
+  > p:empty
+    margin: 0
+
+  > progress
+    display: block
+
+// Menus
+menu
+  no-select()
+
+  background-color: var(--background-neutral)
+  border-bottom: 1px solid var(--neutral-dark)
+  line-height: 1.25
+  margin: 0
+  z-index: 1
+
+  &:focus
+    outline: none
+
+menu.context
+  z-index: 2000
+
+menu-item
+  display: block
+  list-style-type: none
+
+  &.active
+    background-color: var(--dark-subdued-color)
+    color: var(--text-primary-color)
+
+  > label
+    display: flex
+    padding: 0 0.25rem
+    white-space: nowrap
+
+    > *
+      flex: 1 1 auto
+
+    > span.hotkey
+      margin-left: 1rem
+
+      &:empty
+        margin-left: 0
+
+    > .decoration
+      align-self: center
+      flex: 0 1 auto
+      text-align: right
+      margin-left: 0.5rem
+
+      &:empty
+        margin-left: 0
+
+  &[disabled]
+    color: gray
+
+    &.active
+      background-color: rgba(0, 0, 0, 0.125)
+
+menu.options
+  border-top: 1px solid var(--neutral-light)
+  border-left: 1px solid var(--neutral-light)
+  border-right: 1px solid var(--neutral-dark)
+
+  box-shadow: var(--shadow-low) var(--neutral-dark)
+
+  display: none
+
+  padding: 2px
+  padding-bottom: 3px
+  position: absolute
+
+  &.active
+    display: block
+
+  // Submenu
+  > menu-item.menu
+    position: relative
+
+    > menu
+      position: absolute
+      left: 100%
+      top: -3px
+      margin-left: 1px
+
+menu-item.menu.active
+  > menu
+    background-color: var(--background-neutral)
+    color: var(--text-color)
+    display: block
+
+menu.bar
+  display: block
+  flex: 0 0 auto
+  margin: 0
+  padding: 0
+  position: initial
+  white-space: nowrap
+  overflow: hidden
+
+  > menu-item
+    display: inline-block
+    > label > .decoration
+      display: none
+
+  &.accelerator-active
+    span.accelerator
+      text-decoration: underline
+
+// For context menus starting from the bottom of the screen
+menu.options.bottoms-up menu-item.menu > menu
+  top: initial
+  bottom: -4px
+
+#modal
+  align-items: center
+  background-color: var(--neutral-faint)
+  display: none
+  justify-content: center
+  position: absolute
+  z-index: 10000
+  top: 0
+  width: 100%
+  height: 100%
+
+  &.active
+    display: flex
+
+  > *
+    background-color: var(--background-color)
+    border: 1px solid var(--neutral-dark)
+    border-radius: var(--border-radius)
+    box-shadow: var(--shadow-medium) var(--neutral-dark)
+    max-width: 90%
+    max-height: 90%
+    position: relative
+    z-index: 1
+
+  > form
+    display: block
+    padding: 1rem
+
+    > h1, > h2
+      font-size: 1.5rem
+      line-height: 1.5rem
+      margin-bottom: 0.5rem
+
+    > input, > textarea
+      display: block
+      margin-bottom: 1rem
+      width: 100%
+
+    > button
+      margin-right: 1rem
+      &:last-child
+        margin-right: 0
+
+// login form
+#modal > section.ws-login
+  padding: 2rem
+  position: relative
+
+  > form
+    margin-right: 0
+    width: 400px
+
+    > h1
+      margin-top: 0
+    
+    > section > button.top-left
+      position: absolute
+      top: 0.5rem
+      left: 0.5rem
+
+// Fuzzy List
+form.fuzzy-list
+  #modal > &
+    display: flex
+    flex-direction: column
+    width: 66.6%
+    height: 66.6%
+
+  > input
+    width: 100%
+
+  > ul
+    flex: 1 1 auto
+    overflow: auto
+
+    > li
+      cursor: pointer
+
+      &:nth-child(even)
+        background-color: var(--neutral-faintest)
+
+      &:hover
+        background-color: var(--hover-color)
+
+      &.active
+        background-color: var(--highlight-color)
+
+@media only screen and (max-width: 768px)
+  form.fuzzy-list
+    #modal > &
+      width: 90%
+      height: 90%
+
+// Table
+container
+  display: block
+  height: 100%
+  overflow: auto
+  width: 100%
+
+table
+  border-collapse: collapse
+  width: 100%
+
+th
+  text-align: left
+
+thead
+  border-bottom: 1px solid var(--neutral-darker)
+
+td > input
+  border: none
+  box-shadow: none
+  background-color: transparent
+  padding: 0
+  width: 100%
+
+tr:nth-child(even)
+  background-color: var(--neutral-faintest)
+
+window
+  no-select()
+
+  background-color: var(--background-neutral)
+  border: 4px double var(--neutral-darker)
+  border-radius: var(--border-radius)
+  box-shadow: var(--shadow-low) var(--neutral-dark)
+  display: flex
+  flex-direction: column
+  position: absolute
+
+  > header
+    background-color: var(--dark-subdued-color)
+    border-bottom: 1px solid var(--neutral-darker)
+    cursor: default
+    display: flex
+    flex: 0 0 auto
+    line-height: 18px
+
+    > icon
+      background-position: 50%
+      background-repeat: no-repeat
+      background-size: 16px
+      color: var(--text-primary-color)
+      display: inline-block
+      flex: 0 0 auto
+      text-align: center
+      width: 0
+
+    > control
+      align-items: center
+      background-color: var(--background-neutral)
+      border-left: 1px solid var(--neutral-darker)
+      color: var(--text-primary-color)
+      cursor: pointer
+      display: inline-flex
+      flex: 0 0 auto
+      font-family: 'Fira Code', monospace
+      justify-content: center
+      overflow: hidden
+      text-shadow: 1px 0px 0px #000, -1px 0px 0px #000, 0px -1px 0px #000, 0px 1px 0px #000, 1px 1px 0px #808080
+      width: 18px
+
+      &:first-child
+        border-left: none
+
+      &.close
+        &::before
+          content: "X"
+
+      &.maximize
+        &::before
+          content: "+"
+
+      &.minimize
+        &::before
+          content: "-"
+
+      &.restore
+        display: none
+        &::before
+          content: "-"
+
+    > title-bar
+      color: var(--text-primary-color)
+      display: inline-block
+      flex: 1 1 auto
+      overflow: hidden
+      padding: 0 1rem 0 6px
+      text-overflow: ellipsis
+      white-space: nowrap
+
+  > viewport
+    background-color: white
+    display: flex
+    height: 100%
+    overflow: auto
+    position: relative
+    z-index: 0
+
+    > *
+      margin: auto
+
+    > textarea
+      border: none
+      font-family: monospace
+      height: 100%
+      padding: 2px 4px
+      resize: none
+      width: 100%
+
+    > section.ace_editor
+      width: 100%
+      height: 100%
+
+    > iframe
+      border: none
+      height: 100%
+      width: 100%
+      position: absolute
+
+  > resize
+    border-color: var(--neutral-darker)
+    display: block
+    position: absolute
+
+    &.e, &.w
+      cursor: ew-resize
+
+    &.n, &.s
+      cursor: ns-resize
+
+    &.h
+      height: 4px
+      width: 100%
+
+    &.v
+      height: 100%
+      width: 4px
+
+    &.w
+      left: -4px
+    &.e
+      right: -4px
+    &.n
+      top: -4px
+    &.s
+      bottom: -4px
+
+    &.n.w
+      cursor: nw-resize
+
+    &.n.e
+      cursor: ne-resize
+
+    &.s.e
+      cursor: se-resize
+
+    &.s.w
+      cursor: sw-resize
+
+    &.n.v
+      border-bottom: 1px solid
+      height: 23px
+
+    &.s.v
+      border-top: 1px solid
+      height: 23px
+
+    &.e.h
+      border-left: 1px solid
+      width: 22px
+
+    &.w.h
+      border-right: 1px solid
+      width: 22px
+
+  &.minimized
+    > header
+      border-bottom: none
+
+      > control
+        display: none
+
+        &.minimize
+          border-right: none
+          display: inline-flex
+          &::before
+            content: "+"
+
+    > menu, > resize, > viewport
+      display: none
+
+  &.maximized
+    border: none
+    border-radius: 0
+    height: 100%
+    width: 100%
+
+    > resize
+      display: none
+
+    > header
+      position: absolute
+      right: 0
+      z-index: 2
+      > control
+        display: none
+
+        &.restore, &.close
+          display: inline-flex
+
+frame-guard
+  display: block
+  height: 100%
+  left: 0
+  pointer-events: none
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 100000
+
+  &.active
+    pointer-events: auto

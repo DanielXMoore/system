@@ -1,0 +1,12 @@
+name: "system"
+version: "0.5.3"
+publishPath: "/My Briefcase/public/danielx.net/"
+dependencies: {}
+remoteDependencies: [
+  "https://danielx.net/cdn/dexie/2.0.4.min.js"
+]
+cognito:
+  identityPoolId: 'us-east-1:4fe22da5-bb5e-4a78-a260-74ae0a140bf9'
+  poolData:
+    UserPoolId : 'us-east-1_cfvrlBLXG'
+    ClientId : '3fd84r6idec9iork4e9l43mp61'
