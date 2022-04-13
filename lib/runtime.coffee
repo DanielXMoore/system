@@ -1,7 +1,7 @@
 # runtime is what prepares the environment for user apps
 # we hook up the postmaster and proxy messages to the OS
 
-{version} = require "../pixie"
+{version} = require "../pixie.cson"
 
 Postmaster = require "./postmaster"
 {applyStyle, Observable, Style} = require "../lib/ui/index"
@@ -34,10 +34,10 @@ Runtime = (system, opts={}) ->
                 resolve delegate[method](args...)
               catch e
                 reject e
-  
+
       updateSignal: (name, newValue) ->
         externalObservables[name](newValue)
-  
+
       fn: (handlerId, args) ->
         # TODO: `this` is null but should be `system` here for bound events.
         eventListeners[handlerId].apply(null, args)
@@ -91,7 +91,7 @@ Runtime = (system, opts={}) ->
             initializeOnZineOS(appData)
 
           return hostConfig
-      else 
+      else
         # Quick resolve when there is no parent window to connect to
         polyfillForStandalone()
 

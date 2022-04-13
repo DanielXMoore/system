@@ -1,4 +1,4 @@
-{deprecationWarning} = require "./util/index"
+{ deprecationWarning } = require "./util/index.coffee"
 
 # Add some utility readers to the Blob API
 promiseReader = (file, method) ->
@@ -25,7 +25,7 @@ readAsJSON = ->
 Object.assign Blob::,
   readAsText: deprecationWarning "blob.readAsText -> blob.text", readAsText
 
-  readAsArrayBuffer: deprecationWarning "blob.readAsArrayBuffer -> blob.arrayBuffer", 
+  readAsArrayBuffer: deprecationWarning "blob.readAsArrayBuffer -> blob.arrayBuffer",
     readAsArrayBuffer
 
   readAsDataURL: deprecationWarning "blob.readAsDataURL -> blob.dataURL", readAsDataURL
@@ -58,7 +58,7 @@ Image.fromBlob = (blob) ->
     img.onload = ->
       URL.revokeObjectURL url
       resolve img
-    img.onerror = (e) -> 
+    img.onerror = (e) ->
       URL.revokeObjectURL url
       reject e
 

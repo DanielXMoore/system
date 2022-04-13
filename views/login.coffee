@@ -1,16 +1,16 @@
 # Note: This is adapted from whimsy.space My Briefcase to provide a generic
 # login for all whimsy.space and danielx.net apps
 
-Account = require "/lib/acct/account"
+Account = require "../lib/acct/account"
 
-Cognito = require "/lib/aws/cognito"
+Cognito = require "../lib/aws/cognito"
 cognito = Cognito(PACKAGE.config.cognito)
 
-{exec: compileTemplate} = require "/lib/jadelet"
+{exec: compileTemplate} = require "../lib/jadelet"
 
-Observable = require "/lib/observable"
+Observable = require "../lib/observable"
 
-Modal = require "/modal"
+Modal = require "../modal"
 
 module.exports = (options={}) ->
   {description, headless, resolve, reject, title} = options
@@ -56,7 +56,7 @@ module.exports = (options={}) ->
         .finally =>
           @loading false
 
-    title: title 
+    title: title
     description: description
     email: Observable ""
     password: Observable ""

@@ -1,4 +1,4 @@
-Login = require "/views/login"
+Login = require "../../views/login"
 
 module.exports =
   login: (showUI) ->

@@ -1,4 +1,4 @@
-PACKAGE.name = "test"
+# PACKAGE.name = "test"
 require "../main"
 
 MenuItemView = require "../views/menu-item"

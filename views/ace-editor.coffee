@@ -4,8 +4,8 @@ An element containing an ace editor.
 Depends on ace and language tools extension being available in the environment.
 ###
 
-{extensionFor} = require "/lib/fs/index"
-{deprecationWarning, loadScripts} = require "/lib/util/index"
+{extensionFor} = require "../lib/fs/index"
+{deprecationWarning, loadScripts} = require "../lib/util/index"
 
 defaultSessionOptions =
   readOnly: false

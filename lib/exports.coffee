@@ -1,21 +1,21 @@
-{version} = require "../pixie"
+{version} = require "../pixie.cson"
 
-Postmaster = require "./postmaster"
-Runtime = require "./runtime"
+Postmaster = require "./postmaster.coffee"
+Runtime = require "./runtime.coffee"
 
 module.exports = system =
   # app, client, host are merged in during the `launch` call to Runtime
   app:
     Base: -> throw new Error "app.Base can't be called until after system.launch"
-  acct: require "./acct/index"
-  aws: require "./aws/index"
-  fs: require "./fs/index"
+  acct: require "./acct/index.coffee"
+  aws: require "./aws/index.coffee"
+  fs: require "./fs/index.coffee"
 
   ###
   Launch the system client, attach `system` and `application` globals, send
   ready message, invoke callback.
 
-  Once we launch system becomes a global and is extended with 
+  Once we launch system becomes a global and is extended with
   ###
   launch: (opts, fn) ->
     if typeof opts is 'function'
@@ -39,8 +39,8 @@ module.exports = system =
     .finally ->
       fn(system.config)
 
-  pkg: require "./pkg/index"
-  ui: require "./ui/index"
+  pkg: require "./pkg/index.coffee"
+  ui: require "./ui/index.coffee"
   # Merge deprecated util methods until we're ready to remove them
-  util: require "./util/index"
+  util: require "./util/index.coffee"
   version: version

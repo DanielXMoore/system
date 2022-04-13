@@ -1,6 +1,12 @@
 TODO
 ====
 
+## v0.5.3
+
+- [ ] Use esbuild for package
+- [ ] jadelet as npm dependency
+- [ ] Tests and coverage report
+
 ## v0.5.2
 
 - [ ] UI

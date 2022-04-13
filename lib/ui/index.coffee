@@ -1,17 +1,18 @@
-require "/setup"
+require "../../setup"
 
 Jadelet = require "../jadelet"
 Observable = require "../observable"
-Style = require "/style"
+# TODO
+Style = "TODO"# require "../../style.styl"
 
-ContextMenuView = require "/views/context-menu"
-Modal = require "/modal"
-MenuView = require "/views/menu"
-MenuBarView = require "/views/menu-bar"
-MenuItemView = require "/views/menu-item"
-ProgressView = require "/views/progress"
-TableView = require "/views/table"
-WindowView = require "/views/window"
+ContextMenuView = require "../../views/context-menu"
+Modal = require "../../modal"
+MenuView = require "../../views/menu"
+MenuBarView = require "../../views/menu-bar"
+MenuItemView = require "../../views/menu-item"
+ProgressView = require "../../views/progress"
+TableView = require "../../views/table"
+WindowView = require "../../views/window"
 
 # create or replace the style element with the given name
 applyStyle = (styleContent, className) ->
@@ -26,16 +27,16 @@ applyStyle = (styleContent, className) ->
   document.head.appendChild style
 
 module.exports = {
-  AceEditor: require "/views/ace-editor"
+  AceEditor: require "../../views/ace-editor"
   applyStyle
   Bindable: require "../bindable"
   ContextMenu: ContextMenuView
   Drop: require "./drop"
-  FuzzyListView: require "/views/fuzzy-list"
+  FuzzyListView: require "../../views/fuzzy-list"
   Jadelet: Jadelet
   Jadelet2:
     compile: Jadelet.exec
-  Login: require "/views/login"
+  Login: require "../../views/login"
   Modal
   Model: require "../core"
   Menu: MenuView

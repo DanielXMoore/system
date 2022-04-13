@@ -1,7 +1,7 @@
 # User account model
 # depends on shared global AWS config state, so only one user at a time for now
 
-Cognito = require "/lib/aws/cognito"
+Cognito = require "../aws/cognito"
 cognito = Cognito(PACKAGE.config.cognito)
 
 fs = require "../fs/index"
