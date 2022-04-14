@@ -17,7 +17,7 @@ linkTag = (rel, href) ->
 
 uglifyLoaded = lazyLoader ["https://danielx.net/cdn/uglify/3.0.0.min.js"]
 
-latestRequire = require "./require"
+latestRequire = require "./require2"
 
 ###
 Construct an HTML file for the package.
@@ -174,7 +174,7 @@ minifyPackage = uglifyLoaded (pkg, logger) ->
       pkg.dependencies[name] = m
   .then ->
     minSize = JSON.stringify(pkg).length
-    logger?.log "Minified #{pkg.config.name}: #{initialSize} -> #{minSize} (#{((1 - minSize / initialSize)*100).toFixed(1)}% reduction)" 
+    logger?.log "Minified #{pkg.config.name}: #{initialSize} -> #{minSize} (#{((1 - minSize / initialSize)*100).toFixed(1)}% reduction)"
 
     return pkg
 
@@ -182,7 +182,7 @@ module.exports = Object.assign {}, require("./compilers"),
   crudeRequire: crudeRequire
   exec: exec
   htmlForPackage: htmlForPackage
-  Require: require "./require"
+  Require: require "./require2"
   jsForPackage: (pkg, globalName, customCode) ->
     globalName ?= pkg.config.name
     customCode ?= "#{globalName} = require('./main')"

@@ -1165,10 +1165,10 @@ istanbul-reports@^3.0.2:
     html-escaper "^2.0.0"
     istanbul-lib-report "^3.0.0"
 
-jadelet@^2.0.0-pre.2:
-  version "2.0.0-pre.2"
-  resolved "https://registry.yarnpkg.com/jadelet/-/jadelet-2.0.0-pre.2.tgz#47218b4bb24488343958da1f0601011a6f325f4c"
-  integrity sha512-AWrTLoJIbOezpd0n+P+BnyOXcHzOXSnE7USwWUt/JqM5X6Zee6DmzO8e/XS9YfEjCiS5Pcp8snpRm/fRtt0GGA==
+jadelet@^2.0.0-pre.3:
+  version "2.0.0-pre.3"
+  resolved "https://registry.yarnpkg.com/jadelet/-/jadelet-2.0.0-pre.3.tgz#8b0d988e35325ead29c99c9ce7edfee39dc0130f"
+  integrity sha512-b8yXmkDmtFegGOQtE0pV0vv/s1giDvP4oMwtTOm9bmuoDUQb9m+EF4x/DvqASuAkD9EbFCDhIX4DOk88CM7+Kw==
   dependencies:
     "@danielx/observable" "^0.5.0-pre.2"
     commander "^8.1.0"

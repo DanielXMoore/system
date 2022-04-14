@@ -30,7 +30,7 @@
     "coffeescript": "^2.6.1",
     "esbuild": "^0.14.36",
     "esbuild-coffeescript": "^2.0.0",
-    "jadelet": "^2.0.0-pre.2",
+    "jadelet": "^2.0.0-pre.3",
     "jsdom": "^19.0.0",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0"
