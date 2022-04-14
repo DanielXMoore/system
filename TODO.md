@@ -3,9 +3,10 @@ TODO
 
 ## v0.5.3
 
-- [ ] Use esbuild for package
-- [ ] jadelet as npm dependency
-- [ ] Tests and coverage report
+- [x] Testing build
+- [x] Use esbuild for package
+- [x] jadelet as npm dependency
+- [x] Tests and coverage report
 
 ## v0.5.2
 

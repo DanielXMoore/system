@@ -6,4 +6,7 @@ require "./lib/extensions"
 # if PACKAGE.name is "ROOT"
 #   require "./demo"
 
+global.PACKAGE =
+  config: require "./pixie.cson"
+
 module.exports = require "./lib/exports"

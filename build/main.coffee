@@ -54,6 +54,8 @@ esbuild.build({
   sourcemap
   minify: false
   watch
+  define:
+    global: "window"
   platform: 'browser'
   outfile: 'dist/system.js'
   globalName: 'system'
