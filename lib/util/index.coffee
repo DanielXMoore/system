@@ -21,17 +21,7 @@ loadScripts = (urls) ->
 Copy a string to user's OS (win,mac,linux) clipboard.
 ###
 copyToClipboard = (str) ->
-  el = document.createElement 'textarea'
-  el.value = str
-  el.setAttribute 'readonly', ''
-  el.style.position = 'absolute'                 
-  el.style.left = '-9999px'
-  document.body.appendChild el
-
-  el.select()
-  document.execCommand('copy')
-
-  document.body.removeChild(el)
+  navigator.clipboard.writeText(str)
 
 bufferToBase64 = (buffer) ->
   window.btoa String.fromCharCode.apply null, new Uint8Array buffer
@@ -139,12 +129,12 @@ module.exports =
   # Limit promise requests with the same key to only one in flight
   promiseChoke: (fn) ->
     cache = {}
-  
+
     (key) ->
       cached = cache[key]
       if cached
         return cached
-  
+
       cache[key] = fn(key).finally ->
         delete cache[key]
 

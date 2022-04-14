@@ -1,14 +1,15 @@
-require "/lib/extensions"
+require "../../extensions"
 
-{api, cdn, ready} = require "/lib/aws/index"
+{api, cdn, ready} = require "../../aws/index"
 
-Cognito = require "/lib/aws/cognito"
+Cognito = require "../../aws/cognito"
 
 {cognito:config} = PACKAGE.config
 cognito = Cognito(config)
 
-mocha.setup
-  globals: ['AWSCognito', 'AmazonCognitoIdentity', 'AWS']
+# TODO:
+# mocha.setup
+#   globals: ['AWSCognito', 'AmazonCognitoIdentity', 'AWS']
 
 # skipped for test performance, dependence on remote resources
 describe.skip "AWS", ->

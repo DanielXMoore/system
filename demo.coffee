@@ -7,7 +7,7 @@
   MenuBar
   Modal
   Observable
-  Util:{parseMenu}, 
+  Util:{parseMenu},
   Progress
   Style
   Table

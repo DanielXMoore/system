@@ -1,4 +1,4 @@
-Core = require "/lib/exp/core-state"
+Core = require "../../exp/core-state"
 
 describe 'Core', ->
   # Association Testing model

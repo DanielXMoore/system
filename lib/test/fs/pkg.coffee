@@ -1,6 +1,6 @@
-PkgFS = require "/lib/fs/pkg"
+PkgFS = require "../../fs/pkg"
 
-require "/lib/extensions"
+require "../../extensions"
 
 testPkg =
   source:
@@ -30,7 +30,7 @@ describe "Package FS", ->
     persistCalled = false
     persist = -> persistCalled = true
     compileCalled = false
-    compile = (blob) -> 
+    compile = (blob) ->
       compileCalled = true
       blob.text()
 

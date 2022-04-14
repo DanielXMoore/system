@@ -1,3 +1,5 @@
+require("css.escape")
+
 {JSDOM} = require("jsdom")
 {window} = new JSDOM("")
 {
@@ -6,6 +8,7 @@
   FileReader
   HTMLCollection
   Image
+  KeyboardEvent
   Node
   document
   navigator
@@ -27,9 +30,11 @@ Object.assign global, {
   FileReader
   HTMLCollection
   Image
+  KeyboardEvent
   Node
   PACKAGE
   assert
+  crypto: require('crypto').webcrypto
   document
   navigator
   opener
@@ -37,3 +42,8 @@ Object.assign global, {
   self
   window
 }
+
+Object.assign navigator,
+  # stub clipboard API
+  clipboard:
+    writeText: -> Promise.resolve()

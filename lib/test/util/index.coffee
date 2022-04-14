@@ -1,4 +1,4 @@
-require "/lib/extensions"
+require "../../extensions"
 {
   copyToClipboard
   deprecationWarning
@@ -8,7 +8,7 @@ require "/lib/extensions"
   promiseChoke
   throttle
   urlSafeSHA256
-} = require "/lib/util/index"
+} = require "../../util/index"
 
 describe "util", ->
   describe "copyToClipboard", ->
@@ -62,10 +62,10 @@ describe "util", ->
   describe "lazyLoader", ->
     it "should lazy load", ->
       LL = lazyLoader([])
-  
+
       a = (x) -> x
       b = LL a
-  
+
       b(0).then (x) ->
         assert.equal x, 0
 

@@ -1,8 +1,8 @@
-require "/setup"
+require "../../../setup"
 
-Bindable = require "/lib/bindable"
-MountFS = require "/lib/fs/mount"
-PkgFS = require "/lib/fs/pkg"
+Bindable = require "../../bindable"
+MountFS = require "../../fs/mount"
+PkgFS = require "../../fs/pkg"
 
 testPkg =
   source:

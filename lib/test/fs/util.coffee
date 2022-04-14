@@ -8,7 +8,7 @@
   # normalizePath2:normalizePath
   withoutExtension
   withoutAllExtensions
-} = require "/lib/fs/index"
+} = require "../../fs/index"
 
 describe "fs", ->
   describe "util", ->
@@ -61,7 +61,7 @@ describe "fs", ->
         assert.equal baseDirectory("/Home/cool.gif"), "/Home/"
         # A non-root path can be a base directory
         assert.equal baseDirectory("folder/sub/cool.gif"), "folder/sub/"
-  
+
       it "should have base directory undefined if no folder", ->
         assert.equal baseDirectory("just-a-file.js"), undefined
 
@@ -91,7 +91,7 @@ describe "fs", ->
         assert.equal withoutExtension("cool/file.ab.c"), "cool/file.ab"
         assert.equal withoutExtension("but.why/file.ab.c"), "but.why/file.ab"
         assert.equal withoutExtension("but.why/file"), "but.why/file"
-    
+
     describe "withoutAllExtensions", ->
       it "should remove extensions", ->
         assert.equal withoutAllExtensions("cool/file.ab.c"), "cool/file"

@@ -1,4 +1,4 @@
-S3FS = require "/lib/fs/s3"
+S3FS = require "../../fs/s3"
 
 # mock bucket interface
 bucket =
@@ -23,7 +23,7 @@ bucket =
 describe "S3FS", ->
   it "Should cache the proper date when writing then listing", ->
     id = "wat"
-    
+
     refreshCredentials = ->
 
     fs = S3FS(id, bucket, refreshCredentials)

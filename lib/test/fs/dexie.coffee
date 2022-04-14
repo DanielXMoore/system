@@ -1,4 +1,4 @@
-DexieFS = require "/lib/fs/dexie"
+DexieFS = require "../../fs/dexie"
 
 # TODO: Can't test IndexedDB in this sandbox
 describe.skip "DexieFS", ->
