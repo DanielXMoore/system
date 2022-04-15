@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/DanielXMoore/system/badge.svg?branch=main)](https://coveralls.io/github/DanielXMoore/system?branch=main)
+
 System
 ======
 
@@ -33,7 +35,7 @@ fs
 
 The filesystem has common operations for listing, reading, writing, and deleting
 files. Both local and cloud backends are implemented. Different systems can be
-mounted at paths and have events translated cleanly. That's some of the magic 
+mounted at paths and have events translated cleanly. That's some of the magic
 that powers `My Briefcase`.
 
 pkg
@@ -121,7 +123,7 @@ Currently implemented as something like this in ZineOS:
 ```
 self.executePackageInIFrame
   distribution:
-    main: 
+    main:
       content: """
         global.app = system.app.Base({
           pkg: PACKAGE
