@@ -47,3 +47,16 @@ Object.assign navigator,
   # stub clipboard API
   clipboard:
     writeText: -> Promise.resolve()
+
+# Mock styl register
+require.extensions[".styl"] = (module, filename) ->
+  return module.exports = ""
+
+CoffeeScript = require "coffeescript"
+fs = require "fs"
+# Add CSON loader
+require.extensions[".cson"] = (module, filename) ->
+  src = fs.readFileSync(filename, 'utf8')
+  js = "module.exports = " + CoffeeScript.compile src, bare: true
+
+  return module._compile(js, filename)
