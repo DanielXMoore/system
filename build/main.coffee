@@ -5,6 +5,7 @@ coffeeScriptPlugin = require 'esbuild-coffeescript'
 jadeletPlugin = require "jadelet/esbuild-plugin"
 # heraPlugin = require "@danielx/hera/esbuild-plugin"
 CoffeeScript = require "coffeescript"
+stylus = require "stylus"
 
 exists = (p) ->
   access(p)
@@ -29,13 +30,28 @@ extensionResolverPlugin = (extensions) ->
 
       return
 
-# TODO cson plugin
 csonPlugin = ->
   name: "cson"
   setup: (build) ->
     build.onLoad { filter: /\.cson$/ }, (args) ->
       readFile(args.path, 'utf8').then (source) ->
         contents: "module.exports = " + CoffeeScript.compile source, bare: true, header: false
+      .catch (e) ->
+        errors: [
+          {
+            text: e.message
+          }
+        ]
+
+stylusPlugin = ->
+  name: "stylus"
+  setup: (build) ->
+    build.onLoad { filter: /\.styl$/ }, (args) ->
+      readFile(args.path, "utf8").then (source) ->
+        cssText = stylus.render source,
+          filename: args.path
+
+        contents: "module.exports = #{JSON.stringify(cssText)}"
       .catch (e) ->
         errors: [
           {
@@ -66,6 +82,7 @@ esbuild.build({
       inlineMap: sourcemap
     jadeletPlugin()
     csonPlugin()
+    stylusPlugin()
     # heraPlugin
   ]
 }).catch -> process.exit 1

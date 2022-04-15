@@ -2,8 +2,7 @@ require "../../setup"
 
 Jadelet = require "../jadelet"
 Observable = require "../observable"
-# TODO
-Style = "TODO"# require "../../style.styl"
+Style = require "../../style.styl"
 
 ContextMenuView = require "../../views/context-menu"
 Modal = require "../../modal"
