@@ -1,3 +1,5 @@
+"" # TOOD: CoffeeSense hack to move comment below var declarations
+#@ts-ignore
 require("css.escape")
 
 {JSDOM} = require("jsdom")
