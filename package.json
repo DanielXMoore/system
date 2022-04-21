@@ -28,8 +28,10 @@
   "devDependencies": {
     "@danielx/coffeecoverage": "^4.0.0-pre.3",
     "@danielx/hera": "^0.7.3-pre.3",
+    "@types/coffeescript": "^2.5.1",
     "@types/jsdom": "^16.2.14",
     "@types/mocha": "^9.1.0",
+    "@types/stylus": "^0.48.37",
     "coffeescript": "^2.6.1",
     "css.escape": "^1.5.1",
     "esbuild": "^0.14.36",

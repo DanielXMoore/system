@@ -21,7 +21,7 @@
   resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.17.7.tgz#078d8b833fbbcc95286613be8c716cef2b519fa2"
   integrity sha512-p8pdE6j0a29TNGebNm7NzYZWB3xVZJBZ7XGs42uAKzQo8VQ3F0By/cQCtUEABwIqw5zo6WA4NbmxsfzADzMKnQ==
 
-"@babel/core@^7.7.5":
+"@babel/core@^7.1.15", "@babel/core@^7.7.5":
   version "7.17.9"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.17.9.tgz#6bae81a06d95f4d0dec5bb9d74bbc1f58babdcfe"
   integrity sha512-5ug+SfZCpDAkVp9SFIZAzlW18rlzsOcJGaetCjkySnrXXDUw9AR8cDUm1iByTmdWM6yxX6/zycaV76w3YTF2gw==
@@ -243,6 +243,13 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
+"@types/coffeescript@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@types/coffeescript/-/coffeescript-2.5.1.tgz#b2b86d0e304cd4ff6d3b4dfacbc5a3ea69e4f213"
+  integrity sha512-Nf1qH29i3yfS/QjDqjhc3KcxfIJ4eV2X0TRP1s5iWVfLgssy7DQ6W6AP6TYjAGgMACYRho3K9MyWV17a7axbnA==
+  dependencies:
+    "@babel/core" "^7.1.15"
+
 "@types/jsdom@^16.2.14":
   version "16.2.14"
   resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.2.14.tgz#26fe9da6a8870715b154bb84cd3b2e53433d8720"
@@ -266,6 +273,13 @@
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@types/parse5/-/parse5-6.0.3.tgz#705bb349e789efa06f43f128cef51240753424cb"
   integrity sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==
+
+"@types/stylus@^0.48.37":
+  version "0.48.37"
+  resolved "https://registry.yarnpkg.com/@types/stylus/-/stylus-0.48.37.tgz#39b15082d3bc51f7143df76ec6853b5327f47fc2"
+  integrity sha512-IkLnS/GzdDK3rgAmQwLr8LqPvUMa43SHlCnXqsfXNukwaIpiXBNgSHil3ro8aemhF4k4ZiMoa4URE7mwBHPJnQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/tough-cookie@*":
   version "4.0.2"
