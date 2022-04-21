@@ -1,3 +1,7 @@
+#@ts-nocheck
+
+# Script to extract a whimsy.space package json into local files
+
 {mkdir, writeFile} = require "fs/promises"
 {dirname} = require "path"
 
