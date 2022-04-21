@@ -1,7 +1,7 @@
 # runtime is what prepares the environment for user apps
 # we hook up the postmaster and proxy messages to the OS
 
-{version} = require "../pixie.cson"
+{version} = require "../../pixie.cson"
 
 Postmaster = require "./postmaster"
 {applyStyle, Observable, Style} = require "../lib/ui/index"

@@ -1,4 +1,4 @@
-parse = require "../lib/indent-parse"
+parse = require "../source/lib/indent-parse"
 
 describe "Menu Parser", ->
   it "should parse menus into lists", ->

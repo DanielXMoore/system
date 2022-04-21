@@ -1,5 +1,5 @@
-MenuView = require "../views/menu"
-Observable = require "../lib/observable"
+MenuView = require "../source/views/menu"
+Observable = require "../source/lib/observable"
 
 describe "Menu", ->
   # TODO: Make context root optional

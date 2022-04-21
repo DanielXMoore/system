@@ -64,7 +64,7 @@ minify = !watch || process.argv.includes '--minify'
 sourcemap = true
 
 esbuild.build({
-  entryPoints: ['main.coffee']
+  entryPoints: ['source/main.coffee']
   # tsconfig: "./tsconfig.json"
   bundle: true
   sourcemap

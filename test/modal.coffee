@@ -1,5 +1,5 @@
 PACKAGE.name = "test"
-{Modal} = require "../lib/ui/index"
+{Modal} = require "../source/lib/ui/index"
 
 describe "Modal", ->
   it "shoud be totally chill", ->

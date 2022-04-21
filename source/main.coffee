@@ -7,6 +7,6 @@ require "./lib/extensions"
 #   require "./demo"
 
 global.PACKAGE =
-  config: require "./pixie.cson"
+  config: require "../pixie.cson"
 
 module.exports = require "./lib/exports"

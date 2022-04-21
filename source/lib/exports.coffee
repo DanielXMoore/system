@@ -1,4 +1,4 @@
-{version} = require "../pixie.cson"
+{version} = require "../../pixie.cson"
 
 Postmaster = require "./postmaster.coffee"
 Runtime = require "./runtime.coffee"

@@ -28,15 +28,18 @@
   "devDependencies": {
     "@danielx/coffeecoverage": "^4.0.0-pre.3",
     "@danielx/hera": "^0.7.3-pre.3",
+    "@types/jsdom": "^16.2.14",
+    "@types/mocha": "^9.1.0",
     "coffeescript": "^2.6.1",
     "css.escape": "^1.5.1",
     "esbuild": "^0.14.36",
     "esbuild-coffeescript": "^2.0.0",
-    "jadelet": "^2.0.0-pre.3",
+    "jadelet": "^2.0.0-pre.4",
     "jsdom": "^19.0.0",
     "mocha": "^9.2.2",
     "nyc": "^15.1.0",
-    "stylus": "^0.57.0"
+    "stylus": "^0.57.0",
+    "typescript": "^4.6.3"
   },
   "mocha": {
     "extension": [
@@ -53,7 +56,7 @@
     "recursive": true,
     "spec": [
       "test",
-      "lib/**/test/**/*"
+      "source/**/test/**/*"
     ]
   },
   "nyc": {
@@ -71,7 +74,8 @@
     ],
     "exclude": [
       "build/",
-      "lib/**/test/*"
+      "source/**/test/*",
+      "node_modules/"
     ],
     "sourceMap": false,
     "instrument": false

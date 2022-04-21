@@ -1,8 +1,8 @@
 # PACKAGE.name = "test"
-require "../main"
+require "../source/main"
 
-MenuItemView = require "../views/menu-item"
-Observable = require "../lib/observable"
+MenuItemView = require "../source/views/menu-item"
+Observable = require "../source/lib/observable"
 
 describe "MenuItem", ->
   # TODO: Make context root optional
