@@ -101,12 +101,18 @@ module.exports =
 
   loadScripts: loadScripts
 
-  # Takes an array of urls, returns a decorator that checks the deps have resolved
-  # before invoking the given function
+  ###*
+  Takes an array of urls, returns a decorator that checks the deps have resolved
+  before invoking the given function
+
+  @param urls {string[]}
+  @return {<T extends function>(fn: T) => (...args: Parameters<T>) => Promise<Awaited<ReturnType<T>>>}
+  ###
   lazyLoader: (urls) ->
     # Load the dependencies keeping a promise to limit to only one request
     # clearing the limit on failure
     # caching on success
+    ###* @type {Promise<any> | null} ###
     loadingDeps = null
     _load = ->
       if loadingDeps
@@ -120,6 +126,7 @@ module.exports =
     # Decorator to ensure initialized
     return (fn) ->
       (args...) ->
+        #@ts-ignore
         context = this
         _load().then ->
           fn.apply context, args

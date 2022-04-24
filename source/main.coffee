@@ -1,5 +1,4 @@
 # We require the polyfill and the extensions, it is our convention
-require "./lib/polyfill"
 require "./lib/extensions"
 
 # Launch demo if we are the published package (not a lib)
@@ -9,4 +8,8 @@ require "./lib/extensions"
 global.PACKAGE =
   config: require "../pixie.cson"
 
+
+###*
+descripbing nsomp jsdoct
+###
 module.exports = require "./lib/exports"

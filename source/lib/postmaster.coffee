@@ -1,14 +1,22 @@
-###
-
-Postmaster wraps the `postMessage` API with promises.
-
-###
-
 defaultReceiver = self
 ackTimeout = 1000
 pmId = 0
 
-module.exports = Postmaster = (self={}) ->
+#
+###*
+@typedef {import("../../types/postmaster").Constructor} Constructor
+@typedef {import("../../types/postmaster").PendingResponse} PendingResponse
+@typedef {import("../../types/postmaster").PostmasterEvent} PostmasterEvent
+@typedef {import("../../types/postmaster").Postmaster} Postmaster
+@typedef {import("../../types/postmaster").Transmission} Transmission
+###
+
+#
+###*
+@type {Constructor}
+###
+#@ts-ignore
+Postmaster = (self={}) ->
   name = "#{defaultReceiver.name}-#{++pmId}"
 
   info = ->
@@ -26,8 +34,10 @@ module.exports = Postmaster = (self={}) ->
     info: ->
     debug: ->
   self.targetOrigin ?= "*"
-  self.token ?= Math.random()
+  self.token ?= Math.random().toString()
 
+  #
+  ###* @param data {Transmission} ###
   send = (data) ->
     target = self.remoteTarget()
     if self.token
@@ -47,26 +57,42 @@ module.exports = Postmaster = (self={}) ->
 
     return
 
+  #
+  ###*
+  @param event {PostmasterEvent}
+  ###
   listener = (event) ->
-    {data, source} = event
+    # TODO: CoffeeSense type inference
+    id = 0
+    method = ""
+    #
+    ###* @type {Postable[]} ###
+    params = []
+    data = event.data
+    source = event.source
+
     target = self.remoteTarget()
 
     # Only listening to messages from `opener`
     # event.source becomes undefined during the `onunload` event
     # We can track a token and match to allow the final message in this case
     if source is target or (source is undefined and data.token is self.token)
-      event.stopImmediatePropagation() # 
+      event.stopImmediatePropagation() #
       info "<-", data
-      {type, method, params, id} = data
+      id = data.id
 
-      switch type
+      switch data.type
         when "ack"
           pendingResponses[id]?.ack = true
+          # TODO: warn if pending response not found?
         when "response"
-          pendingResponses[id].resolve data.result
+          pendingResponses[id]?.resolve data.result
+          # TODO: warn if pending response not found?
         when "error"
-          pendingResponses[id].reject data.error
+          pendingResponses[id]?.reject data.error
+          # TODO: warn if pending response not found?
         when "message"
+          {method, params} = data
           Promise.resolve()
           .then ->
             if source
@@ -106,19 +132,37 @@ module.exports = Postmaster = (self={}) ->
     receiver.removeEventListener "message", listener
     info "DISPOSE"
 
+  #
+  ###* @type {Record<number, PendingResponse>} ###
   pendingResponses = {}
   msgId = 0
 
+  #
+  ###*
+  @param id {number}
+  @return {void}
+  ###
   clear = (id) ->
     debug "CLEAR PENDING", id
-    clearTimeout pendingResponses[id].timeout
+    clearTimeout pendingResponses[id]?.timeout
     delete pendingResponses[id]
+    return
 
+  #
+  ###*
+
+  @param method {string}
+  @param params {...Postable}
+  @return {Promise<any>}
+  ###
   self.send = (method, params...) ->
     new Promise (resolve, reject) ->
       id = ++msgId
 
       ackWait = self.ackTimeout()
+      #
+      ###* @type {number} ###
+      #@ts-ignore TODO: this is the browser setTimeout, not Node's
       timeout = setTimeout ->
         unless resp.ack
           info "TIMEOUT", resp
@@ -126,7 +170,9 @@ module.exports = Postmaster = (self={}) ->
       , ackWait
 
       debug "STORE PENDING", id
-      pendingResponses[id] = resp =
+      #
+      ###* @type {PendingResponse} ###
+      resp =
         timeout: timeout
         resolve: (result) ->
           debug "RESOLVE", id, result
@@ -136,6 +182,12 @@ module.exports = Postmaster = (self={}) ->
           debug "REJECT", id, error
           reject(error)
           clear(id)
+
+      pendingResponses[id] = resp
+
+      #
+      ###* @type {any} ###
+      e = null
 
       try
         send
@@ -150,9 +202,9 @@ module.exports = Postmaster = (self={}) ->
 
       return
 
-  self.invokeRemote = ->
+  self.invokeRemote = (method, params...) ->
     console.warn "Postmaster#invokeRemote is deprecated. Use #send instead."
-    self.send(arguments...)
+    self.send(method, params...)
 
   info "INITIALIZE"
 
@@ -163,3 +215,5 @@ Postmaster.dominant = ->
     opener or ((parent != window) and parent) or undefined
   else # Web Worker Context
     self
+
+module.exports = Postmaster

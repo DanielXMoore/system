@@ -51,14 +51,18 @@ Object.assign navigator,
     writeText: -> Promise.resolve()
 
 # Mock styl register
-require.extensions[".styl"] = (module, filename) ->
-  return module.exports = ""
+###* @type {(module: import("module"), filename: string) => void} ###
+require.extensions[".styl"] = (module) ->
+  module.exports = ""
+  return
 
 CoffeeScript = require "coffeescript"
 fs = require "fs"
 # Add CSON loader
+###* @type {(module: import("module"), filename: string) => void} ###
 require.extensions[".cson"] = (module, filename) ->
   src = fs.readFileSync(filename, 'utf8')
   js = "module.exports = " + CoffeeScript.compile src, bare: true
 
-  return module._compile(js, filename)
+  module._compile(js, filename)
+  return

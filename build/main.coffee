@@ -5,13 +5,13 @@
 fsPromises = require "fs/promises"
 path = require "path"
 esbuild = require 'esbuild'
-#@ts-ignore
 coffeeScriptPlugin = require 'esbuild-coffeescript'
-#
-###* @type {() => ESBuildPlugin} ###
 jadeletPlugin = require "jadelet/esbuild-plugin"
 # heraPlugin = require "@danielx/hera/esbuild-plugin"
 CoffeeScript = require "coffeescript"
+# TODO: waiting on https://github.com/DefinitelyTyped/DefinitelyTyped/pull/59995
+###* @type {Stylus.Enhanced} ###
+#@ts-ignore
 stylus = require "stylus"
 
 # TODO CoffeeSense destructuring
@@ -66,7 +66,6 @@ stylusPlugin = ->
     build.onLoad { filter: /\.styl$/ }, (args) ->
       readFile(args.path, "utf8").then (source) ->
         cssText = stylus.render source,
-          #@ts-ignore TODO: Figure out how to add an overload to stylus
           filename: args.path
 
         contents: "module.exports = #{JSON.stringify(cssText)}"
@@ -84,7 +83,7 @@ sourcemap = true
 
 esbuild.build({
   entryPoints: ['source/main.coffee']
-  # tsconfig: "./tsconfig.json"
+  tsconfig: "./tsconfig.json"
   bundle: true
   sourcemap
   minify: false

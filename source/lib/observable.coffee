@@ -1,3 +1,3 @@
-{ Observable } = require "jadelet"
+{ Observable } = require "./jadelet"
 
 module.exports = Observable

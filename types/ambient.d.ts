@@ -1,18 +1,41 @@
-// TODO: This will be in Jadelet soon
-declare module "jadelet/esbuild-plugin" {
-  function _exports(options?: {}): {
-    name: "jadelet";
-    setup: (build: any) => any;
-  };
-  export = _exports;
+// https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
+declare type Postable =
+  null | undefined | Number | BigInt | Boolean | String |
+  Date | RegExp |
+  Blob | File | FileList | ArrayBuffer | ArrayBufferView |
+  ImageBitmap | ImageData |
+  Array<Postable> | { [key: string]: Postable } | Map<Postable, Postable> | Set<Postable>
+
+// TODO: move these somewhere?
+
+// System launch options
+declare interface LaunchOpts {
+
 }
 
-declare namespace Stylus {
-  type RenderOptions = import("stylus").RenderOptions
+declare interface Logger {
+  log(...data: any[]): void;
+  info(...data: any[]): void;
+  debug(...data: any[]): void;
+  error(...data: any[]): void;
+  warn(...data: any[]): void;
+}
 
-  // TODO: This doesn't seem to be extending stylus yet...
-  interface Static {
-    yolo: "hi"
-    render(str: string, options: RenderOptions): string
+declare interface Package {
+  config: {
+    name?: string
+  }
+  source?: {
+    [key: string]: {
+      content: string
+    }
+  }
+  distribution: {
+    [key: string]: {
+      content: string
+    }
+  }
+  dependencies: {
+    [key: string]: Package
   }
 }
