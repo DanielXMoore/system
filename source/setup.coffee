@@ -6,8 +6,6 @@
 # 'require("/lib/jadelet")' rather than system.ui.Jadelet
 #
 # TODO: Re-examine how we set template deps in Prometheus
-require "./lib/polyfill"
-
 global.system ?= {}
 global.system.ui ?= {}
 global.system.ui.Jadelet ?= require("./lib/jadelet")
