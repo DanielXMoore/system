@@ -19,7 +19,7 @@ module.exports = Model = (I={}, self={}) ->
 
     ###
     Extends this object with methods from the passed in object. A shortcut for Object.extend(self, methods)
-    
+
     >     I =
     >       x: 30
     >       y: 40
@@ -32,17 +32,17 @@ module.exports = Model = (I={}, self={}) ->
     >         I.maxSpeed += 1
     >
     >     player.increaseSpeed()
-    
+
     ###
     extend: (objects...) ->
       Object.assign self, objects...
 
     ###
     Includes a module in this object. A module is a constructor that takes two parameters, `I` and `self`
-    
+
     >     myObject = Model()
     >     myObject.include(Bindable)
-    
+
     >     # now you can bind handlers to functions
     >     myObject.bind "someEvent", ->
     >       alert("wow. that was easy.")

@@ -1,7 +1,8 @@
 require "../../setup"
 
 Jadelet = require "../jadelet"
-Observable = require "../observable"
+Observable = Jadelet.Observable
+#@ts-ignore
 Style = require "../../style.styl"
 
 ContextMenuView = require "../../views/context-menu"
@@ -13,7 +14,12 @@ ProgressView = require "../../views/progress"
 TableView = require "../../views/table"
 WindowView = require "../../views/window"
 
-# create or replace the style element with the given name
+#
+###*
+create or replace the style element with the given name
+@param styleContent {string}
+@param className {string}
+###
 applyStyle = (styleContent, className) ->
   if className
     escapedName = CSS.escape(className)

@@ -10,6 +10,11 @@ declare type Postable =
 
 // System launch options
 declare interface LaunchOpts {
+  debug?: boolean
+  logger?: Logger
+}
+
+declare interface SystemConfig {
 
 }
 

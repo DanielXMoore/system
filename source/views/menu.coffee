@@ -1,7 +1,5 @@
 Observable = require "../lib/observable"
 
-assert = require "../lib/assert"
-
 {advance, accelerateItem, asElement, get, F, S, htmlEscape, handle, isDescendant} = require "../util"
 
 MenuTemplate = require "../templates/menu"
@@ -35,7 +33,7 @@ module.exports = MenuView = ({items, classes, style, contextRoot, parent}) ->
   classes ?= -> ["options"]
 
   {activeItem} = contextRoot
-  
+
   if typeof items is "string"
     items = parseMenu(items)
 
@@ -46,7 +44,6 @@ module.exports = MenuView = ({items, classes, style, contextRoot, parent}) ->
         when typeof item is "string" and item.match(/^[=-]+$/)
           SeparatorView()
         when Array.isArray(item)
-          assert item.length is 2
           [label, submenuItems] = item
           MenuItemView
             label: label

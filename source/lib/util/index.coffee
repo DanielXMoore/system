@@ -1,5 +1,8 @@
-# Load scripts sequentially, prevents failures if there is a dependency
-# order
+###*
+Load scripts sequentially, prevents failures if there is a dependency
+order
+@param urls {string[]}
+###
 loadScripts = (urls) ->
   urls.reduce (p, url) ->
     p.then ->
@@ -12,36 +15,58 @@ loadScripts = (urls) ->
       document.body.appendChild script
 
       return new Promise (resolve, reject) ->
+        #@ts-ignore
         script.onload = resolve
         script.onerror = reject
   , Promise.resolve()
 
-
-###
+#
+###*
 Copy a string to user's OS (win,mac,linux) clipboard.
+@param str {string}
 ###
 copyToClipboard = (str) ->
   navigator.clipboard.writeText(str)
 
+#
+###*
+@param buffer {ArrayLike<number> | ArrayBufferLike}
+###
 bufferToBase64 = (buffer) ->
+  #@ts-ignore Argument of type 'Uint8Array' is not assignable to parameter of type 'number[]'
   window.btoa String.fromCharCode.apply null, new Uint8Array buffer
 
+#
+###*
+@param base64String {string}
+###
 base64URLEncode = (base64String) ->
   base64String.replace(/\+/g, "-").replace(/\//g, "_").replace(/\=/g, "")
 
+#
+###*
+@param data {BufferSource}
+###
 digest = (data) ->
   crypto.subtle.digest("SHA-256", data)
 
+#
+###*
+@param string {string}
+###
 escapeRegex = (string) ->
   string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
 
-# Match is an array of regex match results
-# unmatched runs of characters followed by single character matches, alternating
-# ["", "a", " cool ", "d", "og"]
-# returns a score, higher is better
+#
+###*
+Match is an array of regex match results
+unmatched runs of characters followed by single character matches, alternating
+["", "a", " cool ", "d", "og"]
+returns a score, higher is better
+@param match {RegExpMatchArray}
+@return {number}
+###
 scoreMatch = (match) ->
-  return unless match
-
   # -1 so that if first char is matched it gets consecutive bonus
   lastMatch = -1
   pos = 0
@@ -67,6 +92,12 @@ scoreMatch = (match) ->
 
 module.exports =
   copyToClipboard: copyToClipboard
+  ###*
+  @template {Function} T
+  @param msg {string}
+  @param fn {T}
+  @return {(...args: Parameters<T>) => ReturnType<T>}
+  ###
   deprecationWarning: (msg, fn) ->
     if typeof msg is "function"
       fn = msg
@@ -74,10 +105,17 @@ module.exports =
 
     ->
       console.warn msg
+      #@ts-ignore
       fn.apply(this, arguments)
 
   escapeRegex: escapeRegex
 
+  ###*
+  @template T
+  @param term {string}
+  @param items {T[]}
+  @param asString {(item: T) => string}
+  ###
   fuzzyMatch: (term, items, asString=String) ->
     re = RegExp("^" +term.split("").map (c) ->
       "([^#{escapeRegex c}]*)(#{escapeRegex c})"
@@ -85,15 +123,25 @@ module.exports =
 
     items.map (item) ->
       if match = asString(item).match re
-        [item, scoreMatch match]
+        return [item, scoreMatch match]
+      return undefined
     .filter (result) -> result?
     .sort (a, b) ->
+      #@ts-ignore
       b[1] - a[1]
     .map (result) ->
+      #@ts-ignore
       result[0]
 
+  ###*
+  @template T
+  @param array {T[]}
+  @param fn {(item: T) => string}
+  @return {{[key: string]: T[]}}
+  ###
   groupBy: (array, fn) ->
     array.reduce (result, item) ->
+      #@ts-ignore
       (result[fn(item)] ?= []).push item
 
       return result
@@ -133,8 +181,15 @@ module.exports =
 
   Postmaster: require "../postmaster"
 
-  # Limit promise requests with the same key to only one in flight
+  ###*
+  Limit promise requests with the same key to only one in flight
+
+  @template {{finally: (f: () => void) => R}} R
+  @param fn {(this: void, key: string) => R}
+  @return {(key: string) => R}
+  ###
   promiseChoke: (fn) ->
+    ###* @type {{[key: string]: R} }###
     cache = {}
 
     (key) ->
@@ -145,8 +200,30 @@ module.exports =
       cache[key] = fn(key).finally ->
         delete cache[key]
 
+  ###*
+  @template T
+  @template {any[]} A
+  @template R
+  @param wait {number}
+  @param func {(this: T, ...args: A) => R}
+  @return {(this: T, ...args: A) => R}
+  ###
   throttle: (wait, func) ->
-    context = args = result = undefined
+    #
+    ###* @type {T} ###
+    #@ts-ignore
+    context = null
+    #
+    ###* @type {A} ###
+    #@ts-ignore
+    args = null
+    #
+    ###* @type {R} ###
+    #@ts-ignore
+    result = null
+
+    #
+    ###* @type NodeJS.Timeout | null###
     timeout = null
     previous = 0
 
@@ -155,13 +232,16 @@ module.exports =
       timeout = null
       result = func.apply(context, args)
       if !timeout
+        #@ts-ignore
         context = args = null
+      return
 
-    return ->
+    return (_args...) ->
       now = Date.now()
       remaining = wait - (now - previous)
       context = this
-      args = arguments
+      args = _args
+
       if remaining <= 0 || remaining > wait
         if timeout
           clearTimeout(timeout)
@@ -170,12 +250,16 @@ module.exports =
         previous = now
         result = func.apply(context, args)
         if (!timeout)
+          #@ts-ignore
           context = args = null
       else if !timeout
         timeout = setTimeout(later, remaining)
 
       return result
 
+  ###*
+  @param blob {Blob}
+  ###
   urlSafeSHA256: (blob) ->
     blob.arrayBuffer()
     .then digest

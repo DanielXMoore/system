@@ -57,3 +57,7 @@ declare namespace NodeJS {
     _compile(content: string, filename: string): void
   }
 }
+
+interface StringConstructor {
+  fromCharCode(...codes: ReadonlyArray<number>): string;
+}

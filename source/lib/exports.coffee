@@ -11,11 +11,14 @@ module.exports = system =
   aws: require "./aws/index.coffee"
   fs: require "./fs/index.coffee"
 
-  ###
+  ###*
   Launch the system client, attach `system` and `application` globals, send
   ready message, invoke callback.
 
   Once we launch system becomes a global and is extended with
+
+  @param opts {LaunchOpts}
+  @param fn {(config: SystemConfig) => void}
   ###
   launch: (opts, fn) ->
     if typeof opts is 'function'
