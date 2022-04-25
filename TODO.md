@@ -6,6 +6,7 @@ TODO
 - [ ] Types + Docs
   - [x] CoffeeSense
 - [ ] AWS SDK v3
+- [ ] Explore Observable / Model / CoreState stuff again and how it relates to types
 
 
 ## v0.5.3
