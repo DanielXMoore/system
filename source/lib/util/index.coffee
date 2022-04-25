@@ -154,7 +154,6 @@ module.exports =
   before invoking the given function
 
   @param urls {string[]}
-  @return {<T extends function>(fn: T) => (...args: Parameters<T>) => Promise<Awaited<ReturnType<T>>>}
   ###
   lazyLoader: (urls) ->
     # Load the dependencies keeping a promise to limit to only one request
@@ -172,11 +171,21 @@ module.exports =
         throw e
 
     # Decorator to ensure initialized
+    ###*
+    @template T
+    @template {any[]} A
+    @template R
+    @param fn {(this: T, ...args: A) => Promise<Awaited<R>>}
+    ###
     return (fn) ->
+      ###*
+      @this {T}
+      @param args {A}
+      ###
       (args...) ->
-        #@ts-ignore
         context = this
-        _load().then ->
+        _load()
+        .then ->
           fn.apply context, args
 
   Postmaster: require "../postmaster"

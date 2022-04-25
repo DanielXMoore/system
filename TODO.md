@@ -1,6 +1,13 @@
 TODO
 ====
 
+## v0.6.0
+
+- [ ] Types + Docs
+  - [x] CoffeeSense
+- [ ] AWS SDK v3
+
+
 ## v0.5.3
 
 - [x] Testing build

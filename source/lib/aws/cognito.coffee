@@ -1,4 +1,4 @@
-###
+###*
 Cognito info:
 
 JS SDK: https://github.com/aws/amazon-cognito-identity-js
@@ -10,7 +10,14 @@ https://whimsy.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
 
 _LL = require "./_lazy"
 
-module.exports = ({identityPoolId, poolData}) ->
+#
+###*
+@param options {NonNullable<Package["config"]["cognito"]>}
+###
+
+Cognito = ({identityPoolId, poolData}) ->
+  ###* @type {UserPool} ###
+  #@ts-ignore
   userPool = null
 
   # Creating user pool and setting region must happen after lazy loading
@@ -19,17 +26,28 @@ module.exports = ({identityPoolId, poolData}) ->
     # Region needs to be set if not already set previously elsewhere.
     AWS.config.region ?= 'us-east-1'
 
-  # Wrap lazy loader function to call _init logic
+  #
+  ###*
+  Wrap lazy loader function to call _init logic
+  @type {typeof _LL}
+  ###
   LL = (fn) ->
     _LL (args...) ->
       _init()
       fn.apply(this, args)
 
+  #
+  ###*
+  @param session {any}
+  @param resolve {(aws: AWSInterface) => void}
+  @param reject {(error: Error) => void}
+  ###
   configureAWSFor = (session, resolve, reject) ->
     token = session.getIdToken().getJwtToken()
 
     loginKey = "cognito-idp.us-east-1.amazonaws.com/#{poolData.UserPoolId}"
     loginsConfig = {}
+    #@ts-ignore
     loginsConfig[loginKey] = token
 
     AWS.config.credentials = new AWS.CognitoIdentityCredentials
@@ -48,6 +66,10 @@ module.exports = ({identityPoolId, poolData}) ->
       return
     return
 
+  #
+  ###*
+  @param attributes {{[key: string]: string}}
+  ###
   mapAttributes = (attributes) ->
     return unless attributes
 
@@ -108,11 +130,14 @@ module.exports = ({identityPoolId, poolData}) ->
 
     logout: ->
       # Clear global AWS credentials if present
-      delete AWS?.config.credentials
+      if AWS?
+        #@ts-ignore
+        delete AWS.config.credentials
 
-      try # return if we can't access local storage
+      try
         localStorage
       catch
+        # return if we can't access local storage
         return
 
       Object.keys(localStorage).filter (key) ->
@@ -120,3 +145,7 @@ module.exports = ({identityPoolId, poolData}) ->
       .forEach (key) ->
         delete localStorage[key]
       return
+
+  return self
+
+module.exports = Cognito

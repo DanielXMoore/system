@@ -3,7 +3,8 @@ Interface to all our AWS madness.
 
 ###
 
-{urlSafeSHA256} = require "../util/index"
+util = require "../util/index"
+urlSafeSHA256 = util.urlSafeSHA256
 
 LL = require "./_lazy"
 
@@ -30,6 +31,8 @@ module.exports =
     S3.config.credentials = AWS.config.credentials
     id = AWS.config.credentials.identityId
 
+    #
+    ###* @param sha {string} ###
     queryExisting = (sha) ->
       fetch "https://whimsy.space/cdn/#{sha}",
         method: 'HEAD'
@@ -56,6 +59,8 @@ module.exports =
             timeout = 1000
             n = 0
 
+            #
+            ###* @type {() => void} ###
             check = ->
               n += 1
 
@@ -70,6 +75,7 @@ module.exports =
                     , timeout
               else
                 reject()
+              return
 
             check()
 
@@ -81,5 +87,6 @@ module.exports =
     new WebSocket url
 
   # Resolve with true if lazy loading succeeded
+  #@ts-ignore TODO
   ready: LL ->
     AWS

@@ -2,6 +2,7 @@
 # depends on shared global AWS config state, so only one user at a time for now
 
 Cognito = require "../aws/cognito"
+#@ts-ignore TODO
 cognito = Cognito(PACKAGE.config.cognito)
 
 fs = require "../fs/index"
