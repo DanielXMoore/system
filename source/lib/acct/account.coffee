@@ -6,8 +6,12 @@ cognito = Cognito(PACKAGE.config.cognito)
 
 fs = require "../fs/index"
 
-{promiseChoke} = require "../util/index"
+util = require "../util/index"
+promiseChoke = util.promiseChoke
 
+###*
+@param AWS {AWSInterface}
+###
 module.exports = (AWS) ->
   # The credentials need to have been populated by cognito.
   id = AWS.config.credentials.identityId

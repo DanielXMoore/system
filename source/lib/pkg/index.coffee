@@ -234,25 +234,3 @@ module.exports = Object.assign {}, require("./compilers"),
     require.packageWrapper(pkg, customCode)
   minify: minifyPackage
   ModLoader: require "./mod-loader"
-
-# TODO: This was extracted from the old editor, we can use it to split up
-# published docs and html files to require a shared remote package rather
-# than bundling inline of every published artifact.
-# TODO: preload package json as="fetch" when exploring this again.
-# https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content
-remotePackageLauncher = (pkg, url) ->
-  """
-    xhr = new XMLHttpRequest;
-    url = #{JSON.stringify(url)};
-    xhr.open("GET", url, true);
-    xhr.responseType = "json";
-    xhr.onload = function() {
-      (function(PACKAGE) {
-        var src = #{JSON.stringify(PACKAGE.dependencies.require.distribution.main.content)};
-        var Require = new Function("PACKAGE", "return " + src)({distribution: {main: {content: src}}});
-        var require = Require.generateFor(PACKAGE);
-        require('./' + PACKAGE.entryPoint);
-      })(xhr.response)
-    };
-    xhr.send();
-  """

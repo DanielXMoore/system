@@ -1,6 +1,11 @@
 { deprecationWarning } = require "./util/index.coffee"
 
-# Add some utility readers to the Blob API
+#
+###*
+Add some utility readers to the Blob API
+@param file {Blob}
+@param method {"readAsText" | "readAsArrayBuffer" | "readAsDataURL"}
+###
 promiseReader = (file, method) ->
   new Promise (resolve, reject) ->
     reader = new FileReader
@@ -9,15 +14,31 @@ promiseReader = (file, method) ->
     reader.onerror = reject
     reader[method](file)
 
+#
+###*
+@this {Blob}
+###
 readAsText = ->
   promiseReader(this, "readAsText")
 
+#
+###*
+@this {Blob}
+###
 readAsArrayBuffer = ->
   promiseReader(this, "readAsArrayBuffer")
 
+#
+###*
+@this {Blob}
+###
 readAsDataURL = ->
   promiseReader(this, "readAsDataURL")
 
+#
+###*
+@this {Blob}
+###
 readAsJSON = ->
   @text()
   .then JSON.parse
@@ -37,6 +58,10 @@ Blob::dataURL ?= readAsDataURL
 Blob::json ?= readAsJSON
 Blob::text ?= readAsText
 
+#
+###*
+@param path {string}
+###
 Blob::download = (path) ->
   url = URL.createObjectURL(this)
   a = document.createElement("a")
@@ -48,8 +73,12 @@ Blob::download = (path) ->
   a.remove()
   URL.revokeObjectURL(url)
 
-# Load an image from a blob returning a promise that is fulfilled with the
-# loaded image or rejected with an error
+###*
+Load an image from a blob returning a promise that is fulfilled with the
+loaded image or rejected with an error
+@param blob {Blob}
+###
+#@ts-ignore TODO: Can't add fromBlob to global image var easily
 Image.fromBlob = (blob) ->
   url = URL.createObjectURL(blob)
 
@@ -71,3 +100,5 @@ JSON.toBlob ?= (object, mime="application/json") ->
 # HTML Extensions
 HTMLCollection::forEach ?= Array::forEach
 FileList::forEach ?= Array::forEach
+
+module.exports = {}

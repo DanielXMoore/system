@@ -5,7 +5,9 @@ require "./lib/extensions"
 # if PACKAGE.name is "ROOT"
 #   require "./demo"
 
+#@ts-ignore
 global.PACKAGE =
+  #@ts-ignore
   config: require "../pixie.cson"
 
 

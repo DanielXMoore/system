@@ -3,7 +3,7 @@
 Postmaster = require "./postmaster.coffee"
 Runtime = require "./runtime.coffee"
 
-module.exports = system =
+system =
   # app, client, host are merged in during the `launch` call to Runtime
   app:
     Base: -> throw new Error "app.Base can't be called until after system.launch"
@@ -47,3 +47,5 @@ module.exports = system =
   # Merge deprecated util methods until we're ready to remove them
   util: require "./util/index.coffee"
   version: version
+
+module.exports = system

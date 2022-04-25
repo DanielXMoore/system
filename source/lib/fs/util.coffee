@@ -51,16 +51,24 @@ absolutizePath = (base, relativePath, preventEscape=true) ->
 
 allDirectories = /^.*\//
 
+#
+###*
+@param path {string}
+###
 baseName = (path) ->
   path.replace(allDirectories, "")
 
+#
+###*
+@param path {string}
+###
 extensionFor = (path) ->
-    result = baseName(path).match /\.([^.]+)$/
+  result = baseName(path).match /\.([^.]+)$/
 
-    if result
-      result[1]
-    else
-      ""
+  if result
+    result[1] or ""
+  else
+    ""
 
 # Only media types for editible text types that have a special meaning to the
 # browser. html, css, js, json all require the proper content type header to

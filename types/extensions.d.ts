@@ -19,6 +19,6 @@ interface FileList {
 }
 
 // TODO: This doesn't appear to work
-interface Image {
+declare interface Image {
   fromBlob(blob: Blob): Promise<HTMLImageElement>
 }

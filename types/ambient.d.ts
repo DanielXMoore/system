@@ -8,6 +8,15 @@ declare type Postable =
 
 // TODO: move these somewhere?
 
+declare interface AWSInterface {
+  config: {
+    credentials: {
+      identityId: string
+    }
+  }
+  S3: any
+}
+
 // System launch options
 declare interface LaunchOpts {
   debug?: boolean
@@ -44,3 +53,5 @@ declare interface Package {
     [key: string]: Package
   }
 }
+
+declare var PACKAGE: Package
