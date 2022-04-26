@@ -1,30 +1,63 @@
 Bindable = require "../bindable"
 
+Dexie = require("dexie").Dexie
+
+#
+###*
+@param path {string}
+@param prefix {string}
+
+###
 FolderEntry = (path, prefix) ->
   folder: true
   path: prefix + path
   relativePath: path
 
-# DexieDB Containing our FS
+#
+###*
+DexieDB Containing our FS
+@return {Dexie & {
+  files: import("dexie").Table<{
+    path: string
+    blob: Blob
+    size: number
+    type: string
+    createdAt: number
+    updatedAt: number
+  }>
+}}
+###
 DexieFSDB = (dbName='fs') ->
   db = new Dexie dbName
 
   db.version(1).stores
     files: 'path, blob, size, type, createdAt, updatedAt'
 
+  #@ts-ignore
   return db
 
 # FS Wrapper to Dexie database
-module.exports = (dbName='fs') ->
+DexieFS = (dbName='fs') ->
   db = DexieFSDB(dbName)
 
   Files = db.files
 
+  #
+  ###*
+  @param eventType {string}
+  @param path {string}
+  @return {<T>(result: T) => T}
+  ###
   notify = (eventType, path) ->
     (result) ->
       self.trigger eventType, path
       return result
 
+  #
+  ###*
+  @type {ZOSFileSystem & Bindable}
+  ###
+  #@ts-ignore
   self =
     # Read a blob from a path
     read: (path) ->
@@ -59,18 +92,26 @@ module.exports = (dbName='fs') ->
         folderPaths = {}
 
         files = files.filter (file) ->
-          file.relativePath = file.path.replace(dir, "")
+          relativePath = file.path.replace(dir, "")
 
-          if file.relativePath.match /\// # folder
-            folderPath = file.relativePath.replace /\/.*$/, "/"
+          if relativePath.match /\// # folder
+            folderPath = relativePath.replace /\/.*$/, "/"
+            #@ts-ignore TODO
             folderPaths[folderPath] = true
             return
           else
+            #@ts-ignore TODO
+            file.relativePath = relativePath
             return file
 
         folders = Object.keys(folderPaths).map (folderPath) ->
           FolderEntry folderPath, dir
 
-        return folders.concat(files)
+        #@ts-ignore TODO: how to get concat to merge types?
+        return [].concat(folders, files)
 
   Bindable(undefined, self)
+
+  return self
+
+module.exports = DexieFS

@@ -59,6 +59,13 @@ escapeRegex = (string) ->
 
 #
 ###*
+@type {<T extends unknown>(x: Function | T) => x is Function}
+###
+isFn = (x) ->
+  typeof x is 'function'
+
+#
+###*
 Match is an array of regex match results
 unmatched runs of characters followed by single character matches, alternating
 ["", "a", " cool ", "d", "og"]
@@ -147,6 +154,8 @@ module.exports =
       return result
     , {}
 
+  isFn: isFn
+
   loadScripts: loadScripts
 
   ###*
@@ -175,13 +184,15 @@ module.exports =
     @template T
     @template {any[]} A
     @template R
-    @param fn {(this: T, ...args: A) => Promise<Awaited<R>>}
+    @param fn {(this: T, ...args: A) => R}
+    @return {(this: T, ...args: A) => R extends PromiseLike<any> ? R : Promise<R>}
     ###
     return (fn) ->
       ###*
       @this {T}
       @param args {A}
       ###
+      #@ts-ignore TODO: what is the proper way to wrap/unwrap promises?
       (args...) ->
         context = this
         _load()
@@ -193,12 +204,12 @@ module.exports =
   ###*
   Limit promise requests with the same key to only one in flight
 
-  @template {{finally: (f: () => void) => R}} R
-  @param fn {(this: void, key: string) => R}
-  @return {(key: string) => R}
+  @template {(key: string) => any} F
+  @param fn {(key: string) => Promise<Awaited<ReturnType<F>>>}
+  @return {(key: string) => Promise<Awaited<ReturnType<F>>>}
   ###
   promiseChoke: (fn) ->
-    ###* @type {{[key: string]: R} }###
+    ###* @type {{[key: string]: Promise<Awaited<ReturnType<F>>>} }###
     cache = {}
 
     (key) ->

@@ -6,7 +6,8 @@ The `Model` module provides helper methods to compose nested data models.
 
 ###
 
-Observable = require "./observable"
+{Observable} = require("jadelet")
+{isFn} = require "./util/index"
 
 module.exports = Model = (I={}, self={}) ->
   Object.assign self,
@@ -132,9 +133,6 @@ module.exports = Model = (I={}, self={}) ->
       I
 
   return self
-
-isFn = (x) ->
-  typeof x is 'function'
 
 getValue = (receiver, property) ->
   if isFn receiver[property]

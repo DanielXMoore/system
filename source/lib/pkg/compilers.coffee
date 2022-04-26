@@ -1,7 +1,7 @@
 {lazyLoader} = require "../util/index"
 
 ###*
-@typedef {(path: string, source: string) => PromiseLike<string>} CompilerFn
+@typedef {(path: string, source: string) => string | Promise<string>} CompilerFn
 ###
 
 #
@@ -111,7 +111,7 @@ compilers =
 ###*
 @param path {string}
 @param source {string}
-@return {PromiseLike<string>}
+@return {Promise<string>}
 ###
 compile = (path, source) ->
   {extensionFor} = require "../fs/util"

@@ -35,6 +35,7 @@
     "@webdoc/cli": "^1.5.7",
     "coffeescript": "^2.6.1",
     "css.escape": "^1.5.1",
+    "dexie": "^3.2.1",
     "esbuild": "^0.14.36",
     "esbuild-coffeescript": "^2.0.0",
     "jadelet": "^2.0.0-pre.4",

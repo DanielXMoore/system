@@ -62,14 +62,10 @@ Postmaster = (self={}) ->
   @param event {PostmasterEvent}
   ###
   listener = (event) ->
-    # TODO: CoffeeSense type inference
-    id = 0
-    method = ""
     #
     ###* @type {Postable[]} ###
     params = []
-    data = event.data
-    source = event.source
+    {data, source} = event
 
     target = self.remoteTarget()
 
@@ -210,6 +206,7 @@ Postmaster = (self={}) ->
 
   return self
 
+#@ts-ignore TODO: This looks like it has something to do with the typedef
 Postmaster.dominant = ->
   if window? # iframe or child window context
     opener or ((parent != window) and parent) or undefined

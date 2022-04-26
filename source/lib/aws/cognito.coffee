@@ -114,7 +114,11 @@ Cognito = ({identityPoolId, poolData}) ->
           onFailure: reject
 
     cachedUser: LL ->
-      new Promise (resolve, reject) ->
+      #
+      ###*
+      @type {Promise<AWSInterface>}
+      ###
+      p = new Promise (resolve, reject) ->
         cognitoUser = userPool.getCurrentUser()
 
         if cognitoUser
@@ -127,6 +131,8 @@ Cognito = ({identityPoolId, poolData}) ->
         else
           setTimeout ->
             reject new Error "No cached user"
+
+      return p
 
     logout: ->
       # Clear global AWS credentials if present

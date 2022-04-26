@@ -7,8 +7,7 @@ cognito = Cognito(PACKAGE.config.cognito)
 
 fs = require "../fs/index"
 
-util = require "../util/index"
-promiseChoke = util.promiseChoke
+{promiseChoke} = require "../util/index"
 
 ###*
 @param AWS {AWSInterface}

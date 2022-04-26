@@ -12,6 +12,7 @@ require("css.escape")
   Image
   KeyboardEvent
   Node
+  addEventListener
   document
   navigator
   opener
@@ -35,6 +36,7 @@ Object.assign global, {
   KeyboardEvent
   Node
   PACKAGE
+  addEventListener
   assert
   crypto: require('crypto').webcrypto
   document

@@ -63,7 +63,7 @@ htmlForPackage = (pkg, opts={}) ->
     '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
   ]
 
-  {config, progenitor} = pkg
+  {config} = pkg
   config ?= {}
 
   {code, systemConfig} = opts
@@ -99,7 +99,7 @@ htmlForPackage = (pkg, opts={}) ->
   if url
     metas.push linkTag "progenitor", url
 
-  (pkg.stylesheets || []).concat(opts.stylesheets || []).forEach (href) ->
+  (pkg.stylesheets || []).concat(opts.stylesheets || []).forEach (###* @type {string} ### href) ->
     metas.push linkTag "stylesheet", href
 
   htmlToBlob """
@@ -203,6 +203,7 @@ _minifyPackage = (pkg, logger) ->
       return
 
     # Minify distribution files
+    #@ts-ignore TODO: Find better way to reference lazy loaded types rather than global
     {code} = UglifyJS.minify file.content,
       toplevel: true
     if code
@@ -212,8 +213,8 @@ _minifyPackage = (pkg, logger) ->
       delete dist[name]
 
   # Minify dependencies
-  Promise.all Object.keys(pkg.dependencies or {}).map (name) ->
-    minifyPackage(pkg.dependencies[name], logger).then (m) ->
+  Promise.all Object.entries(pkg.dependencies or {}).map ([name, dep]) ->
+    minifyPackage(dep, logger).then (m) ->
       pkg.dependencies[name] = m
   .then ->
     minSize = JSON.stringify(pkg).length
@@ -223,14 +224,24 @@ _minifyPackage = (pkg, logger) ->
 
 minifyPackage = uglifyLoaded _minifyPackage
 
+#
+###*
+@param pkg {Package}
+@param globalName {string}
+@param customCode {string}
+###
+jsForPackage = (pkg, globalName, customCode) ->
+  if pkg.config.name
+    globalName ?= pkg.config.name
+  customCode ?= "#{globalName} = require('./main')"
+
+  latestRequire.packageWrapper(pkg, customCode)
+
 module.exports = Object.assign {}, require("./compilers"),
   crudeRequire: crudeRequire
   exec: exec
   htmlForPackage: htmlForPackage
-  Require: require "./require2"
-  jsForPackage: (pkg, globalName, customCode) ->
-    globalName ?= pkg.config.name
-    customCode ?= "#{globalName} = require('./main')"
-    require.packageWrapper(pkg, customCode)
+  Require: latestRequire
+  jsForPackage: jsForPackage
   minify: minifyPackage
   ModLoader: require "./mod-loader"

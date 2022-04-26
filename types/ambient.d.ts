@@ -1,3 +1,5 @@
+// TODO: move these somewhere?
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types
 declare type Postable =
   null | undefined | Number | BigInt | Boolean | String |
@@ -6,7 +8,39 @@ declare type Postable =
   ImageBitmap | ImageData |
   Array<Postable> | { [key: string]: Postable } | Map<Postable, Postable> | Set<Postable>
 
-// TODO: move these somewhere?
+declare interface Bindable {
+  on(event: "*", handler: (event: string, ...args: any[]) => any): this
+  on(event: string, handler: (...args: any[]) => any): this
+  off(event: string, handler?: Function): this
+  trigger(event: string, ...parameters: any[]): this
+}
+
+declare interface FileEntry {
+  path: string
+  relativePath: string
+  type: string
+  size?: number
+}
+
+declare interface FolderEntry {
+  path: string
+  relativePath: string
+  folder: true
+}
+
+declare interface MountFS {
+  clearCache: () => void
+  mount(folderPath: string, subsystem: ZOSFileSystem): ZOSFileSystem & MountFS
+}
+
+declare interface FSOperations {
+  read(path: string): Promise<Blob | undefined>;
+  write(path: string, blob: Blob, options?: any): Promise<unknown>;
+  delete(path: string): Promise<unknown>;
+  list(dir: string): Promise<(FileEntry | FolderEntry)[]>;
+}
+
+declare interface ZOSFileSystem extends FSOperations, Bindable { }
 
 // System launch options
 declare interface LaunchOpts {
