@@ -119,6 +119,13 @@ module.exports =
 
   ###*
   @template T
+  @param x {T | null | undefined}
+  @return {x is T}
+  ###
+  filterExists: (x) -> x?
+
+  ###*
+  @template T
   @param term {string}
   @param items {T[]}
   @param asString {(item: T) => string}
@@ -219,6 +226,19 @@ module.exports =
 
       cache[key] = fn(key).finally ->
         delete cache[key]
+
+  ###*
+  @template T
+  @param array {T[]}
+  @param value {T}
+  ###
+  remove: (array, value) ->
+    index = array.indexOf(value)
+
+    if index >= 0
+      return array.splice(index, 1)[0]
+
+    return undefined
 
   ###*
   @template T

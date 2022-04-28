@@ -1,3 +1,6 @@
+
+{ remove } = require "./util/index"
+
 # TODO: Remove unused `I` argument
 #@ts-ignore
 module.exports = (I={}, self={}) ->
@@ -47,17 +50,3 @@ module.exports = (I={}, self={}) ->
       return self
 
   return self
-
-#
-###*
-@template T
-@param array {T[]}
-@param value {T}
-###
-remove = (array, value) ->
-  index = array.indexOf(value)
-
-  if index >= 0
-    return array.splice(index, 1)[0]
-
-  return undefined

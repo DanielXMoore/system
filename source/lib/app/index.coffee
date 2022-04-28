@@ -1,3 +1,4 @@
+{ filterExists } = require "../util/index"
 # Handle basic file saving/loading/picking, displaying modals/ui. This maps
 # common UI patterns to the `host`'s `readFile` and `writeFile` methods.
 
@@ -55,20 +56,29 @@ Hotkeys = require "./hotkeys"
 #
 # and setting the delegate on boot to receive messages sent from the host.
 
-module.exports = (host, application) ->
+###*
+@param host {SystemHost}
+@param application {SystemApplication}
+###
+AppBase = (host, application) ->
+  ###*
+  @param app {App}
+  ###
   (app={}) ->
     app.saved ?= Observable true
     app.currentPath ?= Observable ""
     app.config ?= {}
 
     # Includes
-    Bindable null, app
+    Bindable undefined, app
     Hotkeys app
 
-    Object.assign app,
+    #
+    ###* @type {AppMethods} ###
+    appMethods =
       confirmUnsaved: ->
         return Promise.resolve() if app.saved()
-  
+
         new Promise (resolve, reject) ->
           Modal.confirm "You will lose unsaved progress, continue?"
           .then (result) ->
@@ -87,6 +97,7 @@ module.exports = (host, application) ->
       # apps can override this to customize their behavior
       drop: (files) ->
         file = files[0]
+        return false unless file
         app.loadFile file, file.name
         return true
 
@@ -95,6 +106,7 @@ module.exports = (host, application) ->
       # apps can override this to customize their behavior
       paste: (files) ->
         file = files[0]
+        return false unless file
         app.loadFile file, file.name
         return true
 
@@ -120,7 +132,7 @@ module.exports = (host, application) ->
             else
               throw new Error "No path given"
           .then (path) ->
-            host.readFile path, true
+            host.readFile path
             .then (file) ->
               app.loadFile file, path
         .catch (e) ->
@@ -139,7 +151,7 @@ module.exports = (host, application) ->
             # TODO: Delegate to specific save strategy
             # zineOS, standalone, electron, ...
             # maybe application.writeFile?
-            host.writeFile path, blob, true
+            host.writeFile path, blob
           .then ->
             app.saved true
             return path
@@ -153,6 +165,9 @@ module.exports = (host, application) ->
             app.currentPath path
             app.save()
 
+
+    Object.assign app, appMethods
+
     # Detecting standalone config flag and provide alternative open and save
     # methods
     if system.config?.standalone
@@ -165,7 +180,7 @@ module.exports = (host, application) ->
           select: (file) ->
             Modal.hide()
             app.loadFile file
-    
+
       # Override save to present download
       app.save = ->
         Modal.prompt "File name", "newfile.txt"
@@ -178,6 +193,7 @@ module.exports = (host, application) ->
     # TODO: Remove drop handlers on dispose
     Drop document, (e) ->
       return if e.defaultPrevented
+      return unless e.dataTransfer
 
       files = e.dataTransfer.files
 
@@ -188,27 +204,26 @@ module.exports = (host, application) ->
     # TODO: Remove paste handlers on dispose
     document.addEventListener "paste", (e) ->
       return if e.defaultPrevented
-      
-      {clipboardData} = e
-      
-      files = clipboardData.files
 
+      {clipboardData} = e
+      return unless clipboardData
+
+      clipboardFiles = clipboardData.files
+      if clipboardFiles.length
+        if app.paste clipboardFiles
+          return e.preventDefault()
+
+      files = itemsToFiles(clipboardData.items)
       if files.length
         if app.paste files
           return e.preventDefault()
-
-      files = Array::map.call e.clipboardData.items, (item) ->
-        item.getAsFile()
-      .filter (file) -> file
-
-      if files.length
-        e.preventDefault() if app.paste files
 
     try
       app.T ?= {}
       TemplateLoader app.pkg, app.T
 
     try
+      #@ts-ignore
       app.version = crudeRequire(app.pkg.distribution.pixie.content).version
 
     # `boot` triggers
@@ -220,13 +235,14 @@ module.exports = (host, application) ->
         applyStyle @style, "app"
       else
         try
+          #@ts-ignore
           applyStyle crudeRequire(app.pkg.distribution.style.content), "app"
 
       # Auto-menu from menu string
       if @menu
         menuBar = MenuBar
           items: @menu
-          handlers: @
+          handlers: this
 
         document.body.appendChild menuBar.element
         app.on "dispose", ->
@@ -243,7 +259,7 @@ module.exports = (host, application) ->
         document.body.appendChild @element
 
       # Bind host application pieces
-      application.delegate = @
+      application.delegate = this
       # auto-bind application title
       # Pipes title changes to os application window, etc.
       if @title?
@@ -258,6 +274,7 @@ module.exports = (host, application) ->
         Observable -> application.saved getProp app, "saved"
 
       # TODO: onbeforeunload?
+      return
 
     app.on "dispose", ->
       if @element
@@ -266,8 +283,29 @@ module.exports = (host, application) ->
 
     return app
 
+#
+###*
+@template C
+@template {keyof C} S
+@param context {C}
+@param prop {S}
+@return {ValueOrReturnValue<C[S]>}
+###
 getProp = (context, prop) ->
-  if typeof context[prop] is 'function'
-    context[prop]()
+  method = context[prop]
+  if typeof method is 'function'
+    method.call(context)
   else
-    context[prop]
+    #@ts-ignore
+    method
+
+#
+###*
+@param items {DataTransferItemList}
+###
+itemsToFiles = (items) ->
+  Array.from(items).map (item) ->
+    item.getAsFile()
+  .filter filterExists
+
+module.exports = AppBase
