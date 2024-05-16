@@ -1,5 +1,5 @@
 {
-  "name": "system",
+  "name": "@danielx/system",
   "version": "0.5.3",
   "description": "System library for whimsy.space and danielx.net apps",
   "main": "dist/main.js",

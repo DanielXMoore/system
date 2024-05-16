@@ -1,6 +1,17 @@
 Notes
 =====
 
+2024-05-15
+----------
+
+Publishing to npm:
+
+The first time you publish a namespaced package you need `--access=public`.
+
+```bash
+npm publish --access=public
+```
+
 2021-07-10
 ----------
 
@@ -65,7 +76,7 @@ Gathering from `zine` and `briefcase`
 2019-10-18
 ----------
 
-Consolidated styles into one file. 
+Consolidated styles into one file.
 
 Goal: get template and view previews working for system client in Prometheus.
 
