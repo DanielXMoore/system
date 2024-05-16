@@ -184,6 +184,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@danielx/civet@^0.5.92":
+  version "0.5.92"
+  resolved "https://registry.yarnpkg.com/@danielx/civet/-/civet-0.5.92.tgz#2aab8ddada934d7de56e73984d1d5aa957f0fcb7"
+  integrity sha512-yjcZ7NsPZxHUG3MMk9Ku34Ym/bauPzxnb0wKPnvip9xQczv6xPSbfzb5xg4k8HQs+flE544wHbUuYafMnqBgCg==
+
 "@danielx/coffeecoverage@^4.0.0-pre.3":
   version "4.0.0-pre.3"
   resolved "https://registry.yarnpkg.com/@danielx/coffeecoverage/-/coffeecoverage-4.0.0-pre.3.tgz#4827a6dea5e75b82fedda052a2b54dcd25426647"

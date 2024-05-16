@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/DanielXMoore/system#readme",
   "devDependencies": {
+    "@danielx/civet": "^0.5.92",
     "@danielx/coffeecoverage": "^4.0.0-pre.3",
     "@danielx/hera": "^0.7.3-pre.3",
     "@types/coffeescript": "^2.5.1",
