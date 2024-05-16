@@ -36,7 +36,6 @@ Object.assign global, {
   Node
   PACKAGE
   assert
-  crypto: require('crypto').webcrypto
   document
   navigator
   opener
